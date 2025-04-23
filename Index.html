@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo seharian</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      max-width: 500px; 
+      margin: auto;
+      color: #333;
+      }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius:20px;
+      width: 100%;
+      position: relative;
+      transition: all 0.5s ease;
+      }
+    
+    ul {
+      list-style: none;
+      padding: 0; 
+      
+    }
+    li {background: linear-gradient(35deg, #00bcd4, #2196f3);; 
+    margin: 0.5rem 0; 
+    padding: 0.5rem; 
+    display: flex;
+    border-radius: 10px;
+    justify-content: space-between; 
+    }
+    .actions button {
+      margin-left: 0.5rem; 
+      border-radius: 20px;
+      
+    }
+  </style>
+</head>
+<body>
+  <h1>List kegiatan kita </h1>
+  <input type="text" id="newTodo" placeholder="Tambah kegiatan...">
+  <button onclick="addTodo()">Tambah</button>
+  <ul id="todoList"></ul>  <script>
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+    function renderTodos() {
+      const list = document.getElementById('todoList');
+      list.innerHTML = '';
+      todos.forEach((todo, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${todo}</span>
+          <span class="actions">
+            <button onclick="editTodo(${index})">Edit</button>
+            <button onclick="deleteTodo(${index})">Hapus</button>
+          </span>`;
+        list.appendChild(li);
+      });
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function addTodo() {
+      const input = document.getElementById('newTodo');
+      const value = input.value.trim();
+      if (value) {
+        todos.push(value);
+        input.value = '';
+        renderTodos();
+      }
+    }
+
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      renderTodos();
+    }
+
+    function editTodo(index) {
+      const newValue = prompt('Edit todo:', todos[index]);
+      if (newValue !== null) {
+        todos[index] = newValue.trim();
+        renderTodos();
+      }
+    }
+
+    renderTodos();
+  </script>  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => console.log('SW registered'));
+    }
+  </script></body>
+</html>
