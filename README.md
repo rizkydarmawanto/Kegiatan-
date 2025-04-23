@@ -13,8 +13,8 @@ Todo List sederhana dengan fitur CRUD (Create, Read, Update, Delete) berbasis Pr
 
 1. Clone repositori ini:
    ```bash
-   git clone https://github.com/username/todo-pwa.git
-   cd todo-pwa
+   git clone https://github.com/rizkydarmawanto/kegiatan-.git
+   cd kegiatan-
 
 2. Buka index.html langsung di browser atau gunakan server lokal seperti Live Server.
 
